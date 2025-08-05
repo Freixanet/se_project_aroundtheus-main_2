@@ -49,4 +49,4 @@ Good luck and have fun!
    ```
 
 **link to Github**
-https://Freixanet.github.io/se_project_aroundtheus/
+https://freixanet.github.io/se_project_aroundtheus-main_2/
