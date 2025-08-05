@@ -1,84 +1,142 @@
+<!--
+  TRADUCCION Y COMENTARIOS DEL CODIGO POR M.FREIXANET
+-->
+
 <!DOCTYPE html>
-<html lang="en">
+<!-- Declaración del tipo de documento, define que el documento es un archivo HTML5. -->
+<html lang="es">
+  <!-- El elemento raíz de una página HTML. El atributo "lang" especifica el idioma del contenido del documento. -->
+
   <head>
+    <!-- Contiene metadatos sobre el documento, como el título, enlaces a scripts y hojas de estilo. -->
     <meta charset="UTF-8" />
+    <!-- Especifica la codificación de caracteres para el documento HTML, UTF-8 es un estándar robusto que incluye casi todos los caracteres. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
+    <!-- Asegura que la página se vea bien en todos los dispositivos, estableciendo el ancho de la vista al ancho del dispositivo y la escala inicial a 1.0. -->
+    <meta
+      name="description"
+      content="Una galería de imágenes de lugares de interés en los Estados Unidos."
+    />
+    <!-- Proporciona una descripción del contenido de la página, útil para los motores de búsqueda. -->
     <meta name="author" content="Tracy Chen" />
-    <meta name="keywords" content="US, landmarks" />
-    <title>Around The US</title>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.svg" />
+    <!-- Especifica el autor del documento. -->
+    <meta name="keywords" content="EE.UU., lugares de interés, galería" />
+    <!-- Define palabras clave relevantes para la página, utilizadas por los motores de búsqueda. -->
+    <title>Alrededor de los EE.UU.</title>
+    <!-- El título de la página, que se muestra en la pestaña del navegador. -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <!-- Enlaza un ícono (favicon) que se muestra en la pestaña del navegador. -->
   </head>
+
   <body class="page">
+    <!-- Contiene todo el contenido visible de una página web. La clase "page" puede aplicar estilos generales al cuerpo del documento. -->
+
     <header class="header">
+      <!-- Define la sección de encabezado de la página, generalmente contiene el logo y la navegación. -->
       <img
-        alt="Around The U.S. Logo"
+        alt="Logo de Alrededor de los EE.UU."
         class="header__logo"
         src="<%=require('./images/around-the-us-logo.svg')%>"
       />
+      <!-- Muestra el logo de la página. El "src" es manejado por Webpack para requerir la imagen. -->
     </header>
+
     <main class="content">
+      <!-- El contenido principal y único de la página. -->
+
       <section class="profile">
-        <img
-          class="profile__image"
-          src="<%=require('./images/jacques-cousteau.jpg')%>"
-          alt="Jacques Cousteau headshot"
-        />
+        <!-- Sección que muestra el perfil del usuario. -->
+        <div class="profile__avatar-container">
+          <img
+            class="profile__image"
+            src="<%=require('./images/jacques-cousteau.jpg')%>"
+            alt="Foto de Jacques Cousteau"
+          />
+          <div class="profile__avatar-overlay"></div>
+        </div>
+        <!-- Imagen de perfil del usuario. -->
         <div class="profile__info">
+          <!-- Contenedor para la información de texto del perfil. -->
           <h1 class="profile__name">Jacques Cousteau</h1>
+          <!-- Nombre del usuario. -->
           <button
             class="profile__edit-button"
             type="button"
-            aria-label="Edit profile"
+            aria-label="Editar perfil"
           ></button>
-          <p class="profile__profession">Explorer</p>
+          <!-- Botón para editar el perfil. "aria-label" mejora la accesibilidad para lectores de pantalla. -->
+          <p class="profile__profession">Explorador</p>
+          <!-- Profesión del usuario. -->
         </div>
         <button
           class="profile__add-button"
           type="button"
-          aria-label="Add new card"
+          aria-label="Añadir nueva tarjeta"
         ></button>
+        <!-- Botón para añadir nuevas tarjetas de imágenes a la galería. -->
       </section>
+
       <section class="cards">
+        <!-- Sección que contiene la galería de tarjetas de imágenes. -->
         <ul class="cards__list">
+          <!-- Lista no ordenada que contendrá las tarjetas. -->
           <template id="card-element">
+            <!-- Plantilla para una tarjeta individual. No se renderiza hasta que se clona con JavaScript. -->
             <li class="card">
+              <!-- Elemento de lista que representa una tarjeta. -->
               <img class="card__image" />
+              <!-- Imagen de la tarjeta. El "src" se establecerá dinámicamente. -->
               <button
                 class="card__delete-button"
                 type="button"
-                aria-label="Delete card"
+                aria-label="Eliminar tarjeta"
               ></button>
+              <!-- Botón para eliminar la tarjeta. -->
               <div class="card__description">
+                <!-- Contenedor para la descripción de la tarjeta. -->
                 <h2 class="card__title"></h2>
+                <!-- Título de la tarjeta. El contenido se establecerá dinámicamente. -->
                 <button
                   class="card__like-button"
                   type="button"
-                  aria-label="Like card"
+                  aria-label="Me gusta"
                 ></button>
+                <!-- Botón para dar "me gusta" a la tarjeta. -->
               </div>
             </li>
           </template>
         </ul>
       </section>
     </main>
+
     <footer class="footer">
-      <p class="footer__copyright">© 2022 Around The U.S.</p>
+      <!-- Pie de página del documento. -->
+      <p class="footer__copyright">© 2022 Around the U.S.</p>
+      <!-- Texto de copyright. -->
     </footer>
+
+    <!-- Ventanas modales para interacción del usuario. -->
+
     <div class="modal" id="edit-modal">
+      <!-- Modal para editar el perfil. -->
       <div class="modal__container">
+        <!-- Contenedor del contenido del modal. -->
         <button
           type="button"
           class="modal__close-button"
-          aria-label="Close popup"
+          aria-label="Cerrar ventana emergente"
         ></button>
-        <h2 class="modal__title">Edit profile</h2>
+        <!-- Botón para cerrar el modal. -->
+        <h2 class="modal__title">Editar perfil</h2>
+        <!-- Título del modal. -->
         <form
           class="form modal__form"
           id="edit-profile-form"
           name="profile-form"
         >
+          <!-- Formulario para editar la información del perfil. -->
           <label class="form__label">
+            <!-- Etiqueta para un campo de entrada. -->
             <input
               required
               type="text"
@@ -88,7 +146,9 @@
               minlength="2"
               maxlength="40"
             />
+            <!-- Campo de entrada para el nombre. "required" hace que el campo sea obligatorio. -->
             <span class="form__error" id="name-error"></span>
+            <!-- Contenedor para mensajes de error de validación. -->
           </label>
           <label class="form__label">
             <input
@@ -100,21 +160,27 @@
               minlength="2"
               maxlength="200"
             />
+            <!-- Campo de entrada para la profesión. -->
             <span class="form__error" id="profession-error"></span>
+            <!-- Contenedor para mensajes de error de validación. -->
           </label>
-          <button type="submit" class="form__button">Save</button>
+          <button type="submit" class="form__button">Guardar</button>
+          <!-- Botón para enviar el formulario. -->
         </form>
       </div>
     </div>
+
     <div class="modal" id="add-modal">
+      <!-- Modal para añadir un nuevo lugar (tarjeta). -->
       <div class="modal__container">
         <button
           type="button"
           class="modal__close-button"
-          aria-label="Close popup"
+          aria-label="Cerrar ventana emergente"
         ></button>
-        <h2 class="modal__title">New place</h2>
+        <h2 class="modal__title">Nuevo lugar</h2>
         <form class="form modal__form" id="add-card-form" name="card-form">
+          <!-- Formulario para añadir una nueva tarjeta. -->
           <label class="form__label">
             <input
               required
@@ -122,10 +188,11 @@
               class="form__input"
               id="place"
               name="name"
-              placeholder="Title"
+              placeholder="Título"
               minlength="1"
               maxlength="30"
             />
+            <!-- Campo para el título del lugar. "placeholder" muestra un texto de ejemplo. -->
             <span class="form__error" id="place-error"></span>
           </label>
           <label class="form__label">
@@ -135,25 +202,75 @@
               class="form__input"
               id="link"
               name="link"
-              placeholder="Image link"
+              placeholder="Enlace de la imagen"
             />
+            <!-- Campo para la URL de la imagen. "type='url'" valida que el formato sea una URL. -->
             <span class="form__error" id="link-error"></span>
           </label>
           <span class="form__error" id="add-card-form-error"></span>
-          <button type="submit" class="form__button">Create</button>
+          <button type="submit" class="form__button">Crear</button>
         </form>
       </div>
     </div>
+
+    <div class="modal" id="delete-confirmation-modal">
+      <!-- Modal de confirmación para eliminar una tarjeta. -->
+      <div class="modal__container">
+        <button
+          type="button"
+          class="modal__close-button"
+          aria-label="Cerrar"
+        ></button>
+        <h2 class="modal__title">Are you sure?</h2>
+        <form name="delete-confirmation-form" class="form modal__form" novalidate>
+          <!-- "novalidate" evita la validación del navegador. -->
+          <button type="submit" class="form__button form__button_delete">
+            Yes
+          </button>
+          <!-- Botón de confirmación para eliminar. -->
+        </form>
+      </div>
+    </div>
+
     <div class="modal" id="image-modal">
-      <div class="modal__popup">
+      <!-- Modal para mostrar una imagen ampliada. -->
+      <div class="modal__container modal__container_image">
+        <!-- Contenedor específico para la imagen modal. -->
         <button
           type="button"
           class="modal__close-button"
           id="close-image"
-          aria-label="Close image popup"
+          aria-label="Cerrar ventana emergente de imagen"
         ></button>
         <img class="modal__image" />
+        <!-- La imagen ampliada. El "src" se establecerá dinámicamente. -->
         <p class="modal__name"></p>
+        <!-- Nombre o descripción de la imagen. -->
+      </div>
+    </div>
+
+    <div class="modal" id="edit-avatar-modal">
+      <div class="modal__container">
+        <button
+          type="button"
+          class="modal__close-button"
+          aria-label="Close popup"
+        ></button>
+        <h2 class="modal__title">Change profile picture</h2>
+        <form class="form modal__form" id="edit-avatar-form" name="avatar-form">
+          <label class="form__label">
+            <input
+              required
+              type="url"
+              class="form__input"
+              id="avatar-link"
+              name="link"
+              placeholder="Image link"
+            />
+            <span class="form__error" id="avatar-link-error"></span>
+          </label>
+          <button type="submit" class="form__button">Save</button>
+        </form>
       </div>
     </div>
   </body>
