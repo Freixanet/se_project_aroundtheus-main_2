@@ -1,4 +1,3 @@
-// ...existing code...
 import Popup from "./Popup.js";
 
 export default class PopupWithForm extends Popup {
@@ -6,11 +5,22 @@ export default class PopupWithForm extends Popup {
     super({ popupSelector });
     this._popupForm = this._popupElement.querySelector(".modal__form");
     this._submitButton = this._popupElement.querySelector(".form__button");
+    this._originalButtonText = this._submitButton.textContent;
     this._formInputs = this._popupForm.querySelectorAll("input");
     this._handleFormSubmit = handleFormSubmit;
     this._errorElement = errorSelector
       ? this._popupForm.querySelector(errorSelector)
       : null;
+  }
+
+  setLoading(isLoading, loadingText = "Saving...") {
+    if (isLoading) {
+      this._submitButton.textContent = loadingText;
+      this._submitButton.disabled = true;
+    } else {
+      this._submitButton.textContent = this._originalButtonText;
+      this._submitButton.disabled = false;
+    }
   }
 
   // Collects data from all the input fields and returns the data as an object

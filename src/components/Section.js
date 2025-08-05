@@ -8,12 +8,16 @@ export default class Section {
   renderItems() {
     // Renders all elements on the page
     this._renderedItems.forEach((item) => {
-      this._renderer(item);
+      this.addItem(this._renderer(item));
     });
   }
 
-  addItem(element) {
+  addItem(element, prepend = false) {
     // Adds the DOM element to the container
-    this._container.prepend(element);
+    if (prepend) {
+      this._container.prepend(element);
+    } else {
+      this._container.append(element);
+    }
   }
 }
