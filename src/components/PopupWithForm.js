@@ -31,7 +31,7 @@ export default class PopupWithForm extends Popup {
   setInputValues(data) {
     this._formInputs.forEach((input) => {
       // Check if the input name exists as a key in the data object
-      if (data[input.name]) {
+      if (Object.prototype.hasOwnProperty.call(data, input.name)) {
         // If it exists, set the input's value to the corresponding value from the data object
         input.value = data[input.name];
       }
