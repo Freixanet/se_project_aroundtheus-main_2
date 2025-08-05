@@ -33,11 +33,13 @@ export default class Card {
   }
 
   isLiked() {
+    console.log("isLiked - this._likes:", this._likes);
     return this._likes.some((like) => like._id === this._userId);
   }
 
   updateLikes(likes) {
-    this._likes = likes;
+    this._likes = likes || []; // Ensure _likes is always an array
+    console.log("updateLikes - new this._likes:", this._likes);
     this._renderLikes();
   }
 

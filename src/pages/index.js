@@ -14,7 +14,7 @@ import UserInfo from "../components/UserInfo";
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
-    // authorization: "29449396-4788-40fb-a3b4-98dbbc6299fd",
+    authorization: "17110c9b-5c8a-4181-9d61-1ca5d24672ce",
     "Content-Type": "application/json",
   },
 });
@@ -79,7 +79,7 @@ function createCard(data, userId) {
       handleLikeClick: (card) => {
         if (card.isLiked()) {
           api
-            .unlikeCard(card.getId())
+            .unlikeCard(card._id)
             .then((updatedCard) => {
               card.updateLikes(updatedCard.likes);
             })
@@ -88,7 +88,7 @@ function createCard(data, userId) {
             });
         } else {
           api
-            .likeCard(card.getId())
+            .likeCard(card._id)
             .then((updatedCard) => {
               card.updateLikes(updatedCard.likes);
             })
