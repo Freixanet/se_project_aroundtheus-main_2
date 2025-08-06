@@ -3,12 +3,18 @@ export default class Card {
     { data, userId, handleImageClick, handleDeleteClick, handleLikeClick },
     cardSelector
   ) {
+    // Store data
     this._name = data.name;
     this._link = data.link;
     this._id = data._id;
     this._ownerId = data.owner ? data.owner._id : '';
-    this._likes = data.likes || [];
     this._userId = userId;
+
+    // Store state - these are placeholders, to be filled by the API response if it differs
+    this._isLiked = data.isLiked;
+    this._likeCount = data.likeCount;
+
+    // Store handlers and selectors
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteClick = handleDeleteClick;
@@ -20,9 +26,6 @@ export default class Card {
     this._likeButton.addEventListener("click", () => this._handleLikeClick(this));
 
     const deleteButton = this._element.querySelector(".card__delete-button");
-    if (this._ownerId !== this._userId) {
-      deleteButton.style.display = "none";
-    }
     deleteButton.addEventListener("click", () => this._handleDeleteClick(this));
 
     this._element
@@ -33,18 +36,22 @@ export default class Card {
   }
 
   isLiked() {
-    console.log("isLiked - this._likes:", this._likes);
-    return this._likes.some((like) => like._id === this._userId);
+    return this._isLiked;
   }
 
-  updateLikes(likes) {
-    this._likes = likes || []; // Ensure _likes is always an array
-    console.log("updateLikes - new this._likes:", this._likes);
+  updateState(newData) {
+    this._isLiked = newData.isLiked;
+    this._likeCount = newData.likeCount;
     this._renderLikes();
   }
 
   _renderLikes() {
-    if (this.isLiked()) {
+    const likeCountElement = this._element.querySelector(".card__like-count");
+    if (likeCountElement) {
+      likeCountElement.textContent = this._likeCount || 0;
+    }
+
+    if (this._isLiked) {
       this._likeButton.classList.add("card__like-button_active");
     } else {
       this._likeButton.classList.remove("card__like-button_active");
@@ -69,8 +76,12 @@ export default class Card {
     cardImage.src = this._link;
     cardImage.alt = `Photo of ${this._name}`;
     this._element.querySelector(".card__title").textContent = this._name;
+    
+    // Correct order: First, find the elements in the DOM.
     this._setEventListeners();
+    // Then, update their state.
     this._renderLikes();
+    
     return this._element;
   }
 }

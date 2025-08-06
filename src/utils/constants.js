@@ -21,7 +21,7 @@ export const validationSettings = {
   inactiveButtonClass: "form__button_disabled",
   inputErrorClass: "form__input_type_error",
   errorClass: "form__error_visible",
-  formSelector: "form",
+  formSelector: ".popup__form", // Target only forms that need validation
 };
 
 export const errorMessages = {

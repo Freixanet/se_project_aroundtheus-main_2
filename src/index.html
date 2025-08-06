@@ -24,7 +24,7 @@
     <!-- Define palabras clave relevantes para la página, utilizadas por los motores de búsqueda. -->
     <title>Alrededor de los EE.UU.</title>
     <!-- El título de la página, que se muestra en la pestaña del navegador. -->
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico" />
     <!-- Enlaza un ícono (favicon) que se muestra en la pestaña del navegador. -->
   </head>
 
@@ -36,9 +36,9 @@
       <img
         alt="Logo de Alrededor de los EE.UU."
         class="header__logo"
-        src="<%=require('./images/around-the-us-logo.svg')%>"
+        src="./images/around-the-us-logo.svg"
       />
-      <!-- Muestra el logo de la página. El "src" es manejado por Webpack para requerir la imagen. -->
+      <!-- Muestra el logo de la página. -->
     </header>
 
     <main class="content">
@@ -49,7 +49,7 @@
         <div class="profile__avatar-container">
           <img
             class="profile__image"
-            src="<%=require('./images/jacques-cousteau.jpg')%>"
+            src="./images/jacques-cousteau.jpg"
             alt="Foto de Jacques Cousteau"
           />
           <div class="profile__avatar-overlay"></div>
@@ -96,11 +96,14 @@
                 <!-- Contenedor para la descripción de la tarjeta. -->
                 <h2 class="card__title"></h2>
                 <!-- Título de la tarjeta. El contenido se establecerá dinámicamente. -->
-                <button
-                  class="card__like-button"
-                  type="button"
-                  aria-label="Me gusta"
-                ></button>
+                <div class="card__like-container">
+                  <button
+                    class="card__like-button"
+                    type="button"
+                    aria-label="Me gusta"
+                  ></button>
+                  <span class="card__like-count">0</span>
+                </div>
                 <!-- Botón para dar "me gusta" a la tarjeta. -->
               </div>
             </li>
@@ -130,7 +133,7 @@
         <h2 class="modal__title">Editar perfil</h2>
         <!-- Título del modal. -->
         <form
-          class="form modal__form"
+          class="form modal__form popup__form"
           id="edit-profile-form"
           name="profile-form"
         >
@@ -179,7 +182,7 @@
           aria-label="Cerrar ventana emergente"
         ></button>
         <h2 class="modal__title">Nuevo lugar</h2>
-        <form class="form modal__form" id="add-card-form" name="card-form">
+        <form class="form modal__form popup__form" id="add-card-form" name="card-form">
           <!-- Formulario para añadir una nueva tarjeta. -->
           <label class="form__label">
             <input
@@ -214,7 +217,6 @@
     </div>
 
     <div class="modal" id="delete-confirmation-modal">
-      <!-- Modal de confirmación para eliminar una tarjeta. -->
       <div class="modal__container">
         <button
           type="button"
@@ -223,11 +225,9 @@
         ></button>
         <h2 class="modal__title">Are you sure?</h2>
         <form name="delete-confirmation-form" class="form modal__form" novalidate>
-          <!-- "novalidate" evita la validación del navegador. -->
           <button type="submit" class="form__button form__button_delete">
             Yes
           </button>
-          <!-- Botón de confirmación para eliminar. -->
         </form>
       </div>
     </div>
@@ -257,7 +257,7 @@
           aria-label="Close popup"
         ></button>
         <h2 class="modal__title">Change profile picture</h2>
-        <form class="form modal__form" id="edit-avatar-form" name="avatar-form">
+        <form class="form modal__form popup__form" id="edit-avatar-form" name="avatar-form">
           <label class="form__label">
             <input
               required
