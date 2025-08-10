@@ -1,4 +1,3 @@
-// webpack.config.js
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
@@ -15,7 +14,6 @@ module.exports = {
     publicPath: "",
   },
   target: ["web", "es5"],
-  // stats: "errors-only", // Comenta o elimina esta línea
   mode: "development",
   devServer: {
     static: path.resolve(__dirname, "dist"),
@@ -30,21 +28,39 @@ module.exports = {
       {
         test: /\.js$/,
         loader: "babel-loader",
-        exclude: "/node_modules/",
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.html$/,
+        loader: "html-loader",
       },
       {
         test: /\.css$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          "style-loader",
           {
             loader: "css-loader",
+            options: {
+              importLoaders: 1,
+            },
           },
+          "postcss-loader",
         ],
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif|woff(2)?|eot|ttf|otf)$/,
-        type: "asset/resource",
+        test: /\.(png|svg|jpg|jpeg|gif)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name][ext]'
+        }
       },
+       {
+        test: /\.(woff(2)?|eot|ttf|otf)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name][ext]'
+        }
+      }
     ],
   },
   plugins: [

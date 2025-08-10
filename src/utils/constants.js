@@ -4,8 +4,11 @@ export const selectors = {
   previewPopup: "#image-modal",
   editFormPopup: "#edit-modal",
   addFormPopup: "#add-modal",
+  deleteConfirmationPopup: "#delete-confirmation-modal",
+  editAvatarPopup: "#edit-avatar-modal",
   profileName: ".profile__name",
   profileProfession: ".profile__profession",
+  profileAvatar: ".profile__image",
   formModalContainer: ".modal__container",
   imageModalContainer: ".modal__popup",
   formInputName: "#name",
@@ -18,7 +21,7 @@ export const validationSettings = {
   inactiveButtonClass: "form__button_disabled",
   inputErrorClass: "form__input_type_error",
   errorClass: "form__error_visible",
-  formSelector: "form",
+  formSelector: ".popup__form", // Target only forms that need validation
 };
 
 export const errorMessages = {

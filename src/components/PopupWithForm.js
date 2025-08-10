@@ -1,4 +1,3 @@
-// ...existing code...
 import Popup from "./Popup.js";
 
 export default class PopupWithForm extends Popup {
@@ -6,6 +5,7 @@ export default class PopupWithForm extends Popup {
     super({ popupSelector });
     this._popupForm = this._popupElement.querySelector(".modal__form");
     this._submitButton = this._popupElement.querySelector(".form__button");
+    this._originalButtonText = this._submitButton.textContent;
     this._formInputs = this._popupForm.querySelectorAll("input");
     this._handleFormSubmit = handleFormSubmit;
     this._errorElement = errorSelector
@@ -13,41 +13,39 @@ export default class PopupWithForm extends Popup {
       : null;
   }
 
-  // Collects data from all the input fields and returns the data as an object
-  _getInputValues() {
-    // Make a input data object
-    const inputObject = {};
-
-    // Name each input by its value
-    this._formInputs.forEach((input) => {
-      inputObject[input.name] = input.value;
-    });
-
-    // Return the data as an object
-    return inputObject;
-  }
-
-  // Use the data object to set the values of the form inputs
-  setInputValues(data = {}) {
-    this._formInputs.forEach((input) => {
-      if (Object.prototype.hasOwnProperty.call(data, input.name)) {
-        input.value = data[input.name];
-      } else {
-        input.value = "";
-      }
-    });
-  }
-
-  showError(message) {
-    if (this._errorElement) {
-      this._errorElement.textContent = message;
+  setLoading(isLoading, loadingText = "Saving...") {
+    if (isLoading) {
+      this._submitButton.textContent = loadingText;
+      this._submitButton.disabled = true;
+    } else {
+      this._submitButton.textContent = this._originalButtonText;
+      this._submitButton.disabled = false;
     }
   }
 
   clearError() {
     if (this._errorElement) {
       this._errorElement.textContent = "";
+      this._errorElement.classList.remove("form__error_active");
     }
+  }
+
+  _getInputValues() {
+    const inputValues = {};
+    this._formInputs.forEach((input) => {
+      inputValues[input.name] = input.value;
+    });
+    return inputValues;
+  }
+
+  setInputValues(data) {
+    this._formInputs.forEach((input) => {
+      if (data[input.name]) {
+        input.value = data[input.name];
+      } else {
+        input.value = "";
+      }
+    });
   }
 
   setEventListeners() {
@@ -61,12 +59,6 @@ export default class PopupWithForm extends Popup {
     });
   }
 
-  close() {
-    // Reset the form
-    this._popupForm.reset();
-    this.clearError();
-
-    // Close the form
-    super.close();
-  }
+  // The close method has been removed to prevent form reset on every close.
+  // The form reset logic should now be handled within the successful submission callback in index.js.
 }
